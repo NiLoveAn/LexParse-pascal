@@ -1,0 +1,1734 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> program
+Rule 1     program -> PROGRAM SEMICOLON body
+Rule 2     body -> <empty>
+Rule 3     body -> body sbody fbody
+Rule 4     sbody -> var variables
+Rule 5     var -> VAR
+Rule 6     variables -> perem types
+Rule 7     perem -> IDENTIFIER
+Rule 8     perem -> IDENTIFIER COMMA perem
+Rule 9     types -> COLON INTEGER SEMICOLON
+Rule 10    types -> COLON DOUBLE SEMICOLON
+Rule 11    fbody -> BEGIN pascalbody END DOT
+Rule 12    pascalbody -> pascalline pascalcolons pascalbody
+Rule 13    pascalbody -> pascalline pascalcolons
+Rule 14    pascalcolons -> SEMICOLON
+Rule 15    pascalcolons -> pascalcolons SEMICOLON
+Rule 16    pascalline -> assign
+Rule 17    pascalline -> func
+Rule 18    pascalline -> expression
+Rule 19    pascalline -> WRITE args
+Rule 20    assign -> IDENTIFIER ASSIGN expr
+Rule 21    expression -> for
+Rule 22    expression -> if
+Rule 23    expression -> while
+Rule 24    expr -> fact
+Rule 25    expr -> expr PLUS fact
+Rule 26    expr -> expr MINUS fact
+Rule 27    fact -> term
+Rule 28    fact -> fact MULTIPLY term
+Rule 29    fact -> fact DIVIDE term
+Rule 30    term -> arg
+Rule 31    term -> LPAREN expr RPAREN
+Rule 32    func -> IDENTIFIER LPAREN args RPAREN
+Rule 33    args -> <empty>
+Rule 34    args -> expr
+Rule 35    args -> args COMMA expr
+Rule 36    arg -> NUMBER
+Rule 37    arg -> IDENTIFIER
+Rule 38    arg -> func
+Rule 39    arg -> NOT
+Rule 40    for -> FOR IDENTIFIER ASSIGN NUMBER TO NUMBER DO BEGIN function END
+Rule 41    if -> IF arg operand arg THEN BEGIN function else END
+Rule 42    else -> <empty>
+Rule 43    else -> ELSE function
+Rule 44    while -> WHILE arg operand arg DO BEGIN function END
+Rule 45    operand -> AND
+Rule 46    operand -> XOR
+Rule 47    operand -> OR
+Rule 48    operand -> BOLEE
+Rule 49    operand -> MENEE
+Rule 50    function -> assign SEMICOLON
+Rule 51    function -> func SEMICOLON
+Rule 52    function -> expression SEMICOLON
+Rule 53    function -> WRITE args SEMICOLON
+Rule 54    function -> assign SEMICOLON function
+Rule 55    function -> func SEMICOLON function
+Rule 56    function -> expression SEMICOLON function
+Rule 57    function -> WRITE args SEMICOLON function
+Rule 58    function -> BREAK SEMICOLON
+Rule 59    function -> CONTINUE SEMICOLON
+
+Terminals, with rules where they appear
+
+AND                  : 45
+ASSIGN               : 20 40
+BEGIN                : 11 40 41 44
+BOLEE                : 48
+BREAK                : 58
+COLON                : 9 10
+COMMA                : 8 35
+CONTINUE             : 59
+DIVIDE               : 29
+DO                   : 40 44
+DOT                  : 11
+DOUBLE               : 10
+ELSE                 : 43
+END                  : 11 40 41 44
+FOR                  : 40
+IDENTIFIER           : 7 8 20 32 37 40
+IF                   : 41
+INTEGER              : 9
+LPAREN               : 31 32
+MENEE                : 49
+MINUS                : 26
+MULTIPLY             : 28
+NOT                  : 39
+NUMBER               : 36 40 40
+OR                   : 47
+PLUS                 : 25
+PROGRAM              : 1
+RPAREN               : 31 32
+SEMICOLON            : 1 9 10 14 15 50 51 52 53 54 55 56 57 58 59
+THEN                 : 41
+TO                   : 40
+VAR                  : 5
+WHILE                : 44
+WRITE                : 19 53 57
+XOR                  : 46
+error                : 
+
+Nonterminals, with rules where they appear
+
+arg                  : 30 41 41 44 44
+args                 : 19 32 35 53 57
+assign               : 16 50 54
+body                 : 1 3
+else                 : 41
+expr                 : 20 25 26 31 34 35
+expression           : 18 52 56
+fact                 : 24 25 26 28 29
+fbody                : 3
+for                  : 21
+func                 : 17 38 51 55
+function             : 40 41 43 44 54 55 56 57
+if                   : 22
+operand              : 41 44
+pascalbody           : 11 12
+pascalcolons         : 12 13 15
+pascalline           : 12 13
+perem                : 6 8
+program              : 0
+sbody                : 3
+term                 : 27 28 29
+types                : 6
+var                  : 4
+variables            : 4
+while                : 23
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . program
+    (1) program -> . PROGRAM SEMICOLON body
+
+    PROGRAM         shift and go to state 2
+
+    program                        shift and go to state 1
+
+state 1
+
+    (0) S' -> program .
+
+
+
+state 2
+
+    (1) program -> PROGRAM . SEMICOLON body
+
+    SEMICOLON       shift and go to state 3
+
+
+state 3
+
+    (1) program -> PROGRAM SEMICOLON . body
+    (2) body -> .
+    (3) body -> . body sbody fbody
+
+    VAR             reduce using rule 2 (body -> .)
+    $end            reduce using rule 2 (body -> .)
+
+    body                           shift and go to state 4
+
+state 4
+
+    (1) program -> PROGRAM SEMICOLON body .
+    (3) body -> body . sbody fbody
+    (4) sbody -> . var variables
+    (5) var -> . VAR
+
+    $end            reduce using rule 1 (program -> PROGRAM SEMICOLON body .)
+    VAR             shift and go to state 7
+
+    sbody                          shift and go to state 5
+    var                            shift and go to state 6
+
+state 5
+
+    (3) body -> body sbody . fbody
+    (11) fbody -> . BEGIN pascalbody END DOT
+
+    BEGIN           shift and go to state 9
+
+    fbody                          shift and go to state 8
+
+state 6
+
+    (4) sbody -> var . variables
+    (6) variables -> . perem types
+    (7) perem -> . IDENTIFIER
+    (8) perem -> . IDENTIFIER COMMA perem
+
+    IDENTIFIER      shift and go to state 12
+
+    variables                      shift and go to state 10
+    perem                          shift and go to state 11
+
+state 7
+
+    (5) var -> VAR .
+
+    IDENTIFIER      reduce using rule 5 (var -> VAR .)
+
+
+state 8
+
+    (3) body -> body sbody fbody .
+
+    VAR             reduce using rule 3 (body -> body sbody fbody .)
+    $end            reduce using rule 3 (body -> body sbody fbody .)
+
+
+state 9
+
+    (11) fbody -> BEGIN . pascalbody END DOT
+    (12) pascalbody -> . pascalline pascalcolons pascalbody
+    (13) pascalbody -> . pascalline pascalcolons
+    (16) pascalline -> . assign
+    (17) pascalline -> . func
+    (18) pascalline -> . expression
+    (19) pascalline -> . WRITE args
+    (20) assign -> . IDENTIFIER ASSIGN expr
+    (32) func -> . IDENTIFIER LPAREN args RPAREN
+    (21) expression -> . for
+    (22) expression -> . if
+    (23) expression -> . while
+    (40) for -> . FOR IDENTIFIER ASSIGN NUMBER TO NUMBER DO BEGIN function END
+    (41) if -> . IF arg operand arg THEN BEGIN function else END
+    (44) while -> . WHILE arg operand arg DO BEGIN function END
+
+    WRITE           shift and go to state 18
+    IDENTIFIER      shift and go to state 19
+    FOR             shift and go to state 23
+    IF              shift and go to state 24
+    WHILE           shift and go to state 25
+
+    pascalbody                     shift and go to state 13
+    pascalline                     shift and go to state 14
+    assign                         shift and go to state 15
+    func                           shift and go to state 16
+    expression                     shift and go to state 17
+    for                            shift and go to state 20
+    if                             shift and go to state 21
+    while                          shift and go to state 22
+
+state 10
+
+    (4) sbody -> var variables .
+
+    BEGIN           reduce using rule 4 (sbody -> var variables .)
+
+
+state 11
+
+    (6) variables -> perem . types
+    (9) types -> . COLON INTEGER SEMICOLON
+    (10) types -> . COLON DOUBLE SEMICOLON
+
+    COLON           shift and go to state 27
+
+    types                          shift and go to state 26
+
+state 12
+
+    (7) perem -> IDENTIFIER .
+    (8) perem -> IDENTIFIER . COMMA perem
+
+    COLON           reduce using rule 7 (perem -> IDENTIFIER .)
+    COMMA           shift and go to state 28
+
+
+state 13
+
+    (11) fbody -> BEGIN pascalbody . END DOT
+
+    END             shift and go to state 29
+
+
+state 14
+
+    (12) pascalbody -> pascalline . pascalcolons pascalbody
+    (13) pascalbody -> pascalline . pascalcolons
+    (14) pascalcolons -> . SEMICOLON
+    (15) pascalcolons -> . pascalcolons SEMICOLON
+
+    SEMICOLON       shift and go to state 31
+
+    pascalcolons                   shift and go to state 30
+
+state 15
+
+    (16) pascalline -> assign .
+
+    SEMICOLON       reduce using rule 16 (pascalline -> assign .)
+
+
+state 16
+
+    (17) pascalline -> func .
+
+    SEMICOLON       reduce using rule 17 (pascalline -> func .)
+
+
+state 17
+
+    (18) pascalline -> expression .
+
+    SEMICOLON       reduce using rule 18 (pascalline -> expression .)
+
+
+state 18
+
+    (19) pascalline -> WRITE . args
+    (33) args -> .
+    (34) args -> . expr
+    (35) args -> . args COMMA expr
+    (24) expr -> . fact
+    (25) expr -> . expr PLUS fact
+    (26) expr -> . expr MINUS fact
+    (27) fact -> . term
+    (28) fact -> . fact MULTIPLY term
+    (29) fact -> . fact DIVIDE term
+    (30) term -> . arg
+    (31) term -> . LPAREN expr RPAREN
+    (36) arg -> . NUMBER
+    (37) arg -> . IDENTIFIER
+    (38) arg -> . func
+    (39) arg -> . NOT
+    (32) func -> . IDENTIFIER LPAREN args RPAREN
+
+    COMMA           reduce using rule 33 (args -> .)
+    SEMICOLON       reduce using rule 33 (args -> .)
+    LPAREN          shift and go to state 37
+    NUMBER          shift and go to state 38
+    IDENTIFIER      shift and go to state 39
+    NOT             shift and go to state 41
+
+    args                           shift and go to state 32
+    expr                           shift and go to state 33
+    fact                           shift and go to state 34
+    term                           shift and go to state 35
+    arg                            shift and go to state 36
+    func                           shift and go to state 40
+
+state 19
+
+    (20) assign -> IDENTIFIER . ASSIGN expr
+    (32) func -> IDENTIFIER . LPAREN args RPAREN
+
+    ASSIGN          shift and go to state 42
+    LPAREN          shift and go to state 43
+
+
+state 20
+
+    (21) expression -> for .
+
+    SEMICOLON       reduce using rule 21 (expression -> for .)
+
+
+state 21
+
+    (22) expression -> if .
+
+    SEMICOLON       reduce using rule 22 (expression -> if .)
+
+
+state 22
+
+    (23) expression -> while .
+
+    SEMICOLON       reduce using rule 23 (expression -> while .)
+
+
+state 23
+
+    (40) for -> FOR . IDENTIFIER ASSIGN NUMBER TO NUMBER DO BEGIN function END
+
+    IDENTIFIER      shift and go to state 44
+
+
+state 24
+
+    (41) if -> IF . arg operand arg THEN BEGIN function else END
+    (36) arg -> . NUMBER
+    (37) arg -> . IDENTIFIER
+    (38) arg -> . func
+    (39) arg -> . NOT
+    (32) func -> . IDENTIFIER LPAREN args RPAREN
+
+    NUMBER          shift and go to state 38
+    IDENTIFIER      shift and go to state 39
+    NOT             shift and go to state 41
+
+    arg                            shift and go to state 45
+    func                           shift and go to state 40
+
+state 25
+
+    (44) while -> WHILE . arg operand arg DO BEGIN function END
+    (36) arg -> . NUMBER
+    (37) arg -> . IDENTIFIER
+    (38) arg -> . func
+    (39) arg -> . NOT
+    (32) func -> . IDENTIFIER LPAREN args RPAREN
+
+    NUMBER          shift and go to state 38
+    IDENTIFIER      shift and go to state 39
+    NOT             shift and go to state 41
+
+    arg                            shift and go to state 46
+    func                           shift and go to state 40
+
+state 26
+
+    (6) variables -> perem types .
+
+    BEGIN           reduce using rule 6 (variables -> perem types .)
+
+
+state 27
+
+    (9) types -> COLON . INTEGER SEMICOLON
+    (10) types -> COLON . DOUBLE SEMICOLON
+
+    INTEGER         shift and go to state 47
+    DOUBLE          shift and go to state 48
+
+
+state 28
+
+    (8) perem -> IDENTIFIER COMMA . perem
+    (7) perem -> . IDENTIFIER
+    (8) perem -> . IDENTIFIER COMMA perem
+
+    IDENTIFIER      shift and go to state 12
+
+    perem                          shift and go to state 49
+
+state 29
+
+    (11) fbody -> BEGIN pascalbody END . DOT
+
+    DOT             shift and go to state 50
+
+
+state 30
+
+    (12) pascalbody -> pascalline pascalcolons . pascalbody
+    (13) pascalbody -> pascalline pascalcolons .
+    (15) pascalcolons -> pascalcolons . SEMICOLON
+    (12) pascalbody -> . pascalline pascalcolons pascalbody
+    (13) pascalbody -> . pascalline pascalcolons
+    (16) pascalline -> . assign
+    (17) pascalline -> . func
+    (18) pascalline -> . expression
+    (19) pascalline -> . WRITE args
+    (20) assign -> . IDENTIFIER ASSIGN expr
+    (32) func -> . IDENTIFIER LPAREN args RPAREN
+    (21) expression -> . for
+    (22) expression -> . if
+    (23) expression -> . while
+    (40) for -> . FOR IDENTIFIER ASSIGN NUMBER TO NUMBER DO BEGIN function END
+    (41) if -> . IF arg operand arg THEN BEGIN function else END
+    (44) while -> . WHILE arg operand arg DO BEGIN function END
+
+    END             reduce using rule 13 (pascalbody -> pascalline pascalcolons .)
+    SEMICOLON       shift and go to state 52
+    WRITE           shift and go to state 18
+    IDENTIFIER      shift and go to state 19
+    FOR             shift and go to state 23
+    IF              shift and go to state 24
+    WHILE           shift and go to state 25
+
+    pascalline                     shift and go to state 14
+    pascalbody                     shift and go to state 51
+    assign                         shift and go to state 15
+    func                           shift and go to state 16
+    expression                     shift and go to state 17
+    for                            shift and go to state 20
+    if                             shift and go to state 21
+    while                          shift and go to state 22
+
+state 31
+
+    (14) pascalcolons -> SEMICOLON .
+
+    SEMICOLON       reduce using rule 14 (pascalcolons -> SEMICOLON .)
+    WRITE           reduce using rule 14 (pascalcolons -> SEMICOLON .)
+    IDENTIFIER      reduce using rule 14 (pascalcolons -> SEMICOLON .)
+    FOR             reduce using rule 14 (pascalcolons -> SEMICOLON .)
+    IF              reduce using rule 14 (pascalcolons -> SEMICOLON .)
+    WHILE           reduce using rule 14 (pascalcolons -> SEMICOLON .)
+    END             reduce using rule 14 (pascalcolons -> SEMICOLON .)
+
+
+state 32
+
+    (19) pascalline -> WRITE args .
+    (35) args -> args . COMMA expr
+
+    SEMICOLON       reduce using rule 19 (pascalline -> WRITE args .)
+    COMMA           shift and go to state 53
+
+
+state 33
+
+    (34) args -> expr .
+    (25) expr -> expr . PLUS fact
+    (26) expr -> expr . MINUS fact
+
+    COMMA           reduce using rule 34 (args -> expr .)
+    SEMICOLON       reduce using rule 34 (args -> expr .)
+    RPAREN          reduce using rule 34 (args -> expr .)
+    PLUS            shift and go to state 54
+    MINUS           shift and go to state 55
+
+
+state 34
+
+    (24) expr -> fact .
+    (28) fact -> fact . MULTIPLY term
+    (29) fact -> fact . DIVIDE term
+
+    PLUS            reduce using rule 24 (expr -> fact .)
+    MINUS           reduce using rule 24 (expr -> fact .)
+    COMMA           reduce using rule 24 (expr -> fact .)
+    SEMICOLON       reduce using rule 24 (expr -> fact .)
+    RPAREN          reduce using rule 24 (expr -> fact .)
+    MULTIPLY        shift and go to state 56
+    DIVIDE          shift and go to state 57
+
+
+state 35
+
+    (27) fact -> term .
+
+    MULTIPLY        reduce using rule 27 (fact -> term .)
+    DIVIDE          reduce using rule 27 (fact -> term .)
+    PLUS            reduce using rule 27 (fact -> term .)
+    MINUS           reduce using rule 27 (fact -> term .)
+    COMMA           reduce using rule 27 (fact -> term .)
+    SEMICOLON       reduce using rule 27 (fact -> term .)
+    RPAREN          reduce using rule 27 (fact -> term .)
+
+
+state 36
+
+    (30) term -> arg .
+
+    MULTIPLY        reduce using rule 30 (term -> arg .)
+    DIVIDE          reduce using rule 30 (term -> arg .)
+    PLUS            reduce using rule 30 (term -> arg .)
+    MINUS           reduce using rule 30 (term -> arg .)
+    COMMA           reduce using rule 30 (term -> arg .)
+    SEMICOLON       reduce using rule 30 (term -> arg .)
+    RPAREN          reduce using rule 30 (term -> arg .)
+
+
+state 37
+
+    (31) term -> LPAREN . expr RPAREN
+    (24) expr -> . fact
+    (25) expr -> . expr PLUS fact
+    (26) expr -> . expr MINUS fact
+    (27) fact -> . term
+    (28) fact -> . fact MULTIPLY term
+    (29) fact -> . fact DIVIDE term
+    (30) term -> . arg
+    (31) term -> . LPAREN expr RPAREN
+    (36) arg -> . NUMBER
+    (37) arg -> . IDENTIFIER
+    (38) arg -> . func
+    (39) arg -> . NOT
+    (32) func -> . IDENTIFIER LPAREN args RPAREN
+
+    LPAREN          shift and go to state 37
+    NUMBER          shift and go to state 38
+    IDENTIFIER      shift and go to state 39
+    NOT             shift and go to state 41
+
+    expr                           shift and go to state 58
+    fact                           shift and go to state 34
+    term                           shift and go to state 35
+    arg                            shift and go to state 36
+    func                           shift and go to state 40
+
+state 38
+
+    (36) arg -> NUMBER .
+
+    MULTIPLY        reduce using rule 36 (arg -> NUMBER .)
+    DIVIDE          reduce using rule 36 (arg -> NUMBER .)
+    PLUS            reduce using rule 36 (arg -> NUMBER .)
+    MINUS           reduce using rule 36 (arg -> NUMBER .)
+    COMMA           reduce using rule 36 (arg -> NUMBER .)
+    SEMICOLON       reduce using rule 36 (arg -> NUMBER .)
+    AND             reduce using rule 36 (arg -> NUMBER .)
+    XOR             reduce using rule 36 (arg -> NUMBER .)
+    OR              reduce using rule 36 (arg -> NUMBER .)
+    BOLEE           reduce using rule 36 (arg -> NUMBER .)
+    MENEE           reduce using rule 36 (arg -> NUMBER .)
+    RPAREN          reduce using rule 36 (arg -> NUMBER .)
+    THEN            reduce using rule 36 (arg -> NUMBER .)
+    DO              reduce using rule 36 (arg -> NUMBER .)
+
+
+state 39
+
+    (37) arg -> IDENTIFIER .
+    (32) func -> IDENTIFIER . LPAREN args RPAREN
+
+    MULTIPLY        reduce using rule 37 (arg -> IDENTIFIER .)
+    DIVIDE          reduce using rule 37 (arg -> IDENTIFIER .)
+    PLUS            reduce using rule 37 (arg -> IDENTIFIER .)
+    MINUS           reduce using rule 37 (arg -> IDENTIFIER .)
+    COMMA           reduce using rule 37 (arg -> IDENTIFIER .)
+    SEMICOLON       reduce using rule 37 (arg -> IDENTIFIER .)
+    AND             reduce using rule 37 (arg -> IDENTIFIER .)
+    XOR             reduce using rule 37 (arg -> IDENTIFIER .)
+    OR              reduce using rule 37 (arg -> IDENTIFIER .)
+    BOLEE           reduce using rule 37 (arg -> IDENTIFIER .)
+    MENEE           reduce using rule 37 (arg -> IDENTIFIER .)
+    RPAREN          reduce using rule 37 (arg -> IDENTIFIER .)
+    THEN            reduce using rule 37 (arg -> IDENTIFIER .)
+    DO              reduce using rule 37 (arg -> IDENTIFIER .)
+    LPAREN          shift and go to state 43
+
+
+state 40
+
+    (38) arg -> func .
+
+    MULTIPLY        reduce using rule 38 (arg -> func .)
+    DIVIDE          reduce using rule 38 (arg -> func .)
+    PLUS            reduce using rule 38 (arg -> func .)
+    MINUS           reduce using rule 38 (arg -> func .)
+    COMMA           reduce using rule 38 (arg -> func .)
+    SEMICOLON       reduce using rule 38 (arg -> func .)
+    AND             reduce using rule 38 (arg -> func .)
+    XOR             reduce using rule 38 (arg -> func .)
+    OR              reduce using rule 38 (arg -> func .)
+    BOLEE           reduce using rule 38 (arg -> func .)
+    MENEE           reduce using rule 38 (arg -> func .)
+    RPAREN          reduce using rule 38 (arg -> func .)
+    THEN            reduce using rule 38 (arg -> func .)
+    DO              reduce using rule 38 (arg -> func .)
+
+
+state 41
+
+    (39) arg -> NOT .
+
+    MULTIPLY        reduce using rule 39 (arg -> NOT .)
+    DIVIDE          reduce using rule 39 (arg -> NOT .)
+    PLUS            reduce using rule 39 (arg -> NOT .)
+    MINUS           reduce using rule 39 (arg -> NOT .)
+    COMMA           reduce using rule 39 (arg -> NOT .)
+    SEMICOLON       reduce using rule 39 (arg -> NOT .)
+    AND             reduce using rule 39 (arg -> NOT .)
+    XOR             reduce using rule 39 (arg -> NOT .)
+    OR              reduce using rule 39 (arg -> NOT .)
+    BOLEE           reduce using rule 39 (arg -> NOT .)
+    MENEE           reduce using rule 39 (arg -> NOT .)
+    RPAREN          reduce using rule 39 (arg -> NOT .)
+    THEN            reduce using rule 39 (arg -> NOT .)
+    DO              reduce using rule 39 (arg -> NOT .)
+
+
+state 42
+
+    (20) assign -> IDENTIFIER ASSIGN . expr
+    (24) expr -> . fact
+    (25) expr -> . expr PLUS fact
+    (26) expr -> . expr MINUS fact
+    (27) fact -> . term
+    (28) fact -> . fact MULTIPLY term
+    (29) fact -> . fact DIVIDE term
+    (30) term -> . arg
+    (31) term -> . LPAREN expr RPAREN
+    (36) arg -> . NUMBER
+    (37) arg -> . IDENTIFIER
+    (38) arg -> . func
+    (39) arg -> . NOT
+    (32) func -> . IDENTIFIER LPAREN args RPAREN
+
+    LPAREN          shift and go to state 37
+    NUMBER          shift and go to state 38
+    IDENTIFIER      shift and go to state 39
+    NOT             shift and go to state 41
+
+    expr                           shift and go to state 59
+    fact                           shift and go to state 34
+    term                           shift and go to state 35
+    arg                            shift and go to state 36
+    func                           shift and go to state 40
+
+state 43
+
+    (32) func -> IDENTIFIER LPAREN . args RPAREN
+    (33) args -> .
+    (34) args -> . expr
+    (35) args -> . args COMMA expr
+    (24) expr -> . fact
+    (25) expr -> . expr PLUS fact
+    (26) expr -> . expr MINUS fact
+    (27) fact -> . term
+    (28) fact -> . fact MULTIPLY term
+    (29) fact -> . fact DIVIDE term
+    (30) term -> . arg
+    (31) term -> . LPAREN expr RPAREN
+    (36) arg -> . NUMBER
+    (37) arg -> . IDENTIFIER
+    (38) arg -> . func
+    (39) arg -> . NOT
+    (32) func -> . IDENTIFIER LPAREN args RPAREN
+
+    RPAREN          reduce using rule 33 (args -> .)
+    COMMA           reduce using rule 33 (args -> .)
+    LPAREN          shift and go to state 37
+    NUMBER          shift and go to state 38
+    IDENTIFIER      shift and go to state 39
+    NOT             shift and go to state 41
+
+    args                           shift and go to state 60
+    expr                           shift and go to state 33
+    fact                           shift and go to state 34
+    term                           shift and go to state 35
+    arg                            shift and go to state 36
+    func                           shift and go to state 40
+
+state 44
+
+    (40) for -> FOR IDENTIFIER . ASSIGN NUMBER TO NUMBER DO BEGIN function END
+
+    ASSIGN          shift and go to state 61
+
+
+state 45
+
+    (41) if -> IF arg . operand arg THEN BEGIN function else END
+    (45) operand -> . AND
+    (46) operand -> . XOR
+    (47) operand -> . OR
+    (48) operand -> . BOLEE
+    (49) operand -> . MENEE
+
+    AND             shift and go to state 63
+    XOR             shift and go to state 64
+    OR              shift and go to state 65
+    BOLEE           shift and go to state 66
+    MENEE           shift and go to state 67
+
+    operand                        shift and go to state 62
+
+state 46
+
+    (44) while -> WHILE arg . operand arg DO BEGIN function END
+    (45) operand -> . AND
+    (46) operand -> . XOR
+    (47) operand -> . OR
+    (48) operand -> . BOLEE
+    (49) operand -> . MENEE
+
+    AND             shift and go to state 63
+    XOR             shift and go to state 64
+    OR              shift and go to state 65
+    BOLEE           shift and go to state 66
+    MENEE           shift and go to state 67
+
+    operand                        shift and go to state 68
+
+state 47
+
+    (9) types -> COLON INTEGER . SEMICOLON
+
+    SEMICOLON       shift and go to state 69
+
+
+state 48
+
+    (10) types -> COLON DOUBLE . SEMICOLON
+
+    SEMICOLON       shift and go to state 70
+
+
+state 49
+
+    (8) perem -> IDENTIFIER COMMA perem .
+
+    COLON           reduce using rule 8 (perem -> IDENTIFIER COMMA perem .)
+
+
+state 50
+
+    (11) fbody -> BEGIN pascalbody END DOT .
+
+    VAR             reduce using rule 11 (fbody -> BEGIN pascalbody END DOT .)
+    $end            reduce using rule 11 (fbody -> BEGIN pascalbody END DOT .)
+
+
+state 51
+
+    (12) pascalbody -> pascalline pascalcolons pascalbody .
+
+    END             reduce using rule 12 (pascalbody -> pascalline pascalcolons pascalbody .)
+
+
+state 52
+
+    (15) pascalcolons -> pascalcolons SEMICOLON .
+
+    SEMICOLON       reduce using rule 15 (pascalcolons -> pascalcolons SEMICOLON .)
+    WRITE           reduce using rule 15 (pascalcolons -> pascalcolons SEMICOLON .)
+    IDENTIFIER      reduce using rule 15 (pascalcolons -> pascalcolons SEMICOLON .)
+    FOR             reduce using rule 15 (pascalcolons -> pascalcolons SEMICOLON .)
+    IF              reduce using rule 15 (pascalcolons -> pascalcolons SEMICOLON .)
+    WHILE           reduce using rule 15 (pascalcolons -> pascalcolons SEMICOLON .)
+    END             reduce using rule 15 (pascalcolons -> pascalcolons SEMICOLON .)
+
+
+state 53
+
+    (35) args -> args COMMA . expr
+    (24) expr -> . fact
+    (25) expr -> . expr PLUS fact
+    (26) expr -> . expr MINUS fact
+    (27) fact -> . term
+    (28) fact -> . fact MULTIPLY term
+    (29) fact -> . fact DIVIDE term
+    (30) term -> . arg
+    (31) term -> . LPAREN expr RPAREN
+    (36) arg -> . NUMBER
+    (37) arg -> . IDENTIFIER
+    (38) arg -> . func
+    (39) arg -> . NOT
+    (32) func -> . IDENTIFIER LPAREN args RPAREN
+
+    LPAREN          shift and go to state 37
+    NUMBER          shift and go to state 38
+    IDENTIFIER      shift and go to state 39
+    NOT             shift and go to state 41
+
+    expr                           shift and go to state 71
+    fact                           shift and go to state 34
+    term                           shift and go to state 35
+    arg                            shift and go to state 36
+    func                           shift and go to state 40
+
+state 54
+
+    (25) expr -> expr PLUS . fact
+    (27) fact -> . term
+    (28) fact -> . fact MULTIPLY term
+    (29) fact -> . fact DIVIDE term
+    (30) term -> . arg
+    (31) term -> . LPAREN expr RPAREN
+    (36) arg -> . NUMBER
+    (37) arg -> . IDENTIFIER
+    (38) arg -> . func
+    (39) arg -> . NOT
+    (32) func -> . IDENTIFIER LPAREN args RPAREN
+
+    LPAREN          shift and go to state 37
+    NUMBER          shift and go to state 38
+    IDENTIFIER      shift and go to state 39
+    NOT             shift and go to state 41
+
+    fact                           shift and go to state 72
+    term                           shift and go to state 35
+    arg                            shift and go to state 36
+    func                           shift and go to state 40
+
+state 55
+
+    (26) expr -> expr MINUS . fact
+    (27) fact -> . term
+    (28) fact -> . fact MULTIPLY term
+    (29) fact -> . fact DIVIDE term
+    (30) term -> . arg
+    (31) term -> . LPAREN expr RPAREN
+    (36) arg -> . NUMBER
+    (37) arg -> . IDENTIFIER
+    (38) arg -> . func
+    (39) arg -> . NOT
+    (32) func -> . IDENTIFIER LPAREN args RPAREN
+
+    LPAREN          shift and go to state 37
+    NUMBER          shift and go to state 38
+    IDENTIFIER      shift and go to state 39
+    NOT             shift and go to state 41
+
+    fact                           shift and go to state 73
+    term                           shift and go to state 35
+    arg                            shift and go to state 36
+    func                           shift and go to state 40
+
+state 56
+
+    (28) fact -> fact MULTIPLY . term
+    (30) term -> . arg
+    (31) term -> . LPAREN expr RPAREN
+    (36) arg -> . NUMBER
+    (37) arg -> . IDENTIFIER
+    (38) arg -> . func
+    (39) arg -> . NOT
+    (32) func -> . IDENTIFIER LPAREN args RPAREN
+
+    LPAREN          shift and go to state 37
+    NUMBER          shift and go to state 38
+    IDENTIFIER      shift and go to state 39
+    NOT             shift and go to state 41
+
+    term                           shift and go to state 74
+    arg                            shift and go to state 36
+    func                           shift and go to state 40
+
+state 57
+
+    (29) fact -> fact DIVIDE . term
+    (30) term -> . arg
+    (31) term -> . LPAREN expr RPAREN
+    (36) arg -> . NUMBER
+    (37) arg -> . IDENTIFIER
+    (38) arg -> . func
+    (39) arg -> . NOT
+    (32) func -> . IDENTIFIER LPAREN args RPAREN
+
+    LPAREN          shift and go to state 37
+    NUMBER          shift and go to state 38
+    IDENTIFIER      shift and go to state 39
+    NOT             shift and go to state 41
+
+    term                           shift and go to state 75
+    arg                            shift and go to state 36
+    func                           shift and go to state 40
+
+state 58
+
+    (31) term -> LPAREN expr . RPAREN
+    (25) expr -> expr . PLUS fact
+    (26) expr -> expr . MINUS fact
+
+    RPAREN          shift and go to state 76
+    PLUS            shift and go to state 54
+    MINUS           shift and go to state 55
+
+
+state 59
+
+    (20) assign -> IDENTIFIER ASSIGN expr .
+    (25) expr -> expr . PLUS fact
+    (26) expr -> expr . MINUS fact
+
+    SEMICOLON       reduce using rule 20 (assign -> IDENTIFIER ASSIGN expr .)
+    PLUS            shift and go to state 54
+    MINUS           shift and go to state 55
+
+
+state 60
+
+    (32) func -> IDENTIFIER LPAREN args . RPAREN
+    (35) args -> args . COMMA expr
+
+    RPAREN          shift and go to state 77
+    COMMA           shift and go to state 53
+
+
+state 61
+
+    (40) for -> FOR IDENTIFIER ASSIGN . NUMBER TO NUMBER DO BEGIN function END
+
+    NUMBER          shift and go to state 78
+
+
+state 62
+
+    (41) if -> IF arg operand . arg THEN BEGIN function else END
+    (36) arg -> . NUMBER
+    (37) arg -> . IDENTIFIER
+    (38) arg -> . func
+    (39) arg -> . NOT
+    (32) func -> . IDENTIFIER LPAREN args RPAREN
+
+    NUMBER          shift and go to state 38
+    IDENTIFIER      shift and go to state 39
+    NOT             shift and go to state 41
+
+    arg                            shift and go to state 79
+    func                           shift and go to state 40
+
+state 63
+
+    (45) operand -> AND .
+
+    NUMBER          reduce using rule 45 (operand -> AND .)
+    IDENTIFIER      reduce using rule 45 (operand -> AND .)
+    NOT             reduce using rule 45 (operand -> AND .)
+
+
+state 64
+
+    (46) operand -> XOR .
+
+    NUMBER          reduce using rule 46 (operand -> XOR .)
+    IDENTIFIER      reduce using rule 46 (operand -> XOR .)
+    NOT             reduce using rule 46 (operand -> XOR .)
+
+
+state 65
+
+    (47) operand -> OR .
+
+    NUMBER          reduce using rule 47 (operand -> OR .)
+    IDENTIFIER      reduce using rule 47 (operand -> OR .)
+    NOT             reduce using rule 47 (operand -> OR .)
+
+
+state 66
+
+    (48) operand -> BOLEE .
+
+    NUMBER          reduce using rule 48 (operand -> BOLEE .)
+    IDENTIFIER      reduce using rule 48 (operand -> BOLEE .)
+    NOT             reduce using rule 48 (operand -> BOLEE .)
+
+
+state 67
+
+    (49) operand -> MENEE .
+
+    NUMBER          reduce using rule 49 (operand -> MENEE .)
+    IDENTIFIER      reduce using rule 49 (operand -> MENEE .)
+    NOT             reduce using rule 49 (operand -> MENEE .)
+
+
+state 68
+
+    (44) while -> WHILE arg operand . arg DO BEGIN function END
+    (36) arg -> . NUMBER
+    (37) arg -> . IDENTIFIER
+    (38) arg -> . func
+    (39) arg -> . NOT
+    (32) func -> . IDENTIFIER LPAREN args RPAREN
+
+    NUMBER          shift and go to state 38
+    IDENTIFIER      shift and go to state 39
+    NOT             shift and go to state 41
+
+    arg                            shift and go to state 80
+    func                           shift and go to state 40
+
+state 69
+
+    (9) types -> COLON INTEGER SEMICOLON .
+
+    BEGIN           reduce using rule 9 (types -> COLON INTEGER SEMICOLON .)
+
+
+state 70
+
+    (10) types -> COLON DOUBLE SEMICOLON .
+
+    BEGIN           reduce using rule 10 (types -> COLON DOUBLE SEMICOLON .)
+
+
+state 71
+
+    (35) args -> args COMMA expr .
+    (25) expr -> expr . PLUS fact
+    (26) expr -> expr . MINUS fact
+
+    COMMA           reduce using rule 35 (args -> args COMMA expr .)
+    SEMICOLON       reduce using rule 35 (args -> args COMMA expr .)
+    RPAREN          reduce using rule 35 (args -> args COMMA expr .)
+    PLUS            shift and go to state 54
+    MINUS           shift and go to state 55
+
+
+state 72
+
+    (25) expr -> expr PLUS fact .
+    (28) fact -> fact . MULTIPLY term
+    (29) fact -> fact . DIVIDE term
+
+    PLUS            reduce using rule 25 (expr -> expr PLUS fact .)
+    MINUS           reduce using rule 25 (expr -> expr PLUS fact .)
+    COMMA           reduce using rule 25 (expr -> expr PLUS fact .)
+    SEMICOLON       reduce using rule 25 (expr -> expr PLUS fact .)
+    RPAREN          reduce using rule 25 (expr -> expr PLUS fact .)
+    MULTIPLY        shift and go to state 56
+    DIVIDE          shift and go to state 57
+
+
+state 73
+
+    (26) expr -> expr MINUS fact .
+    (28) fact -> fact . MULTIPLY term
+    (29) fact -> fact . DIVIDE term
+
+    PLUS            reduce using rule 26 (expr -> expr MINUS fact .)
+    MINUS           reduce using rule 26 (expr -> expr MINUS fact .)
+    COMMA           reduce using rule 26 (expr -> expr MINUS fact .)
+    SEMICOLON       reduce using rule 26 (expr -> expr MINUS fact .)
+    RPAREN          reduce using rule 26 (expr -> expr MINUS fact .)
+    MULTIPLY        shift and go to state 56
+    DIVIDE          shift and go to state 57
+
+
+state 74
+
+    (28) fact -> fact MULTIPLY term .
+
+    MULTIPLY        reduce using rule 28 (fact -> fact MULTIPLY term .)
+    DIVIDE          reduce using rule 28 (fact -> fact MULTIPLY term .)
+    PLUS            reduce using rule 28 (fact -> fact MULTIPLY term .)
+    MINUS           reduce using rule 28 (fact -> fact MULTIPLY term .)
+    COMMA           reduce using rule 28 (fact -> fact MULTIPLY term .)
+    SEMICOLON       reduce using rule 28 (fact -> fact MULTIPLY term .)
+    RPAREN          reduce using rule 28 (fact -> fact MULTIPLY term .)
+
+
+state 75
+
+    (29) fact -> fact DIVIDE term .
+
+    MULTIPLY        reduce using rule 29 (fact -> fact DIVIDE term .)
+    DIVIDE          reduce using rule 29 (fact -> fact DIVIDE term .)
+    PLUS            reduce using rule 29 (fact -> fact DIVIDE term .)
+    MINUS           reduce using rule 29 (fact -> fact DIVIDE term .)
+    COMMA           reduce using rule 29 (fact -> fact DIVIDE term .)
+    SEMICOLON       reduce using rule 29 (fact -> fact DIVIDE term .)
+    RPAREN          reduce using rule 29 (fact -> fact DIVIDE term .)
+
+
+state 76
+
+    (31) term -> LPAREN expr RPAREN .
+
+    MULTIPLY        reduce using rule 31 (term -> LPAREN expr RPAREN .)
+    DIVIDE          reduce using rule 31 (term -> LPAREN expr RPAREN .)
+    PLUS            reduce using rule 31 (term -> LPAREN expr RPAREN .)
+    MINUS           reduce using rule 31 (term -> LPAREN expr RPAREN .)
+    COMMA           reduce using rule 31 (term -> LPAREN expr RPAREN .)
+    SEMICOLON       reduce using rule 31 (term -> LPAREN expr RPAREN .)
+    RPAREN          reduce using rule 31 (term -> LPAREN expr RPAREN .)
+
+
+state 77
+
+    (32) func -> IDENTIFIER LPAREN args RPAREN .
+
+    SEMICOLON       reduce using rule 32 (func -> IDENTIFIER LPAREN args RPAREN .)
+    MULTIPLY        reduce using rule 32 (func -> IDENTIFIER LPAREN args RPAREN .)
+    DIVIDE          reduce using rule 32 (func -> IDENTIFIER LPAREN args RPAREN .)
+    PLUS            reduce using rule 32 (func -> IDENTIFIER LPAREN args RPAREN .)
+    MINUS           reduce using rule 32 (func -> IDENTIFIER LPAREN args RPAREN .)
+    COMMA           reduce using rule 32 (func -> IDENTIFIER LPAREN args RPAREN .)
+    AND             reduce using rule 32 (func -> IDENTIFIER LPAREN args RPAREN .)
+    XOR             reduce using rule 32 (func -> IDENTIFIER LPAREN args RPAREN .)
+    OR              reduce using rule 32 (func -> IDENTIFIER LPAREN args RPAREN .)
+    BOLEE           reduce using rule 32 (func -> IDENTIFIER LPAREN args RPAREN .)
+    MENEE           reduce using rule 32 (func -> IDENTIFIER LPAREN args RPAREN .)
+    RPAREN          reduce using rule 32 (func -> IDENTIFIER LPAREN args RPAREN .)
+    THEN            reduce using rule 32 (func -> IDENTIFIER LPAREN args RPAREN .)
+    DO              reduce using rule 32 (func -> IDENTIFIER LPAREN args RPAREN .)
+
+
+state 78
+
+    (40) for -> FOR IDENTIFIER ASSIGN NUMBER . TO NUMBER DO BEGIN function END
+
+    TO              shift and go to state 81
+
+
+state 79
+
+    (41) if -> IF arg operand arg . THEN BEGIN function else END
+
+    THEN            shift and go to state 82
+
+
+state 80
+
+    (44) while -> WHILE arg operand arg . DO BEGIN function END
+
+    DO              shift and go to state 83
+
+
+state 81
+
+    (40) for -> FOR IDENTIFIER ASSIGN NUMBER TO . NUMBER DO BEGIN function END
+
+    NUMBER          shift and go to state 84
+
+
+state 82
+
+    (41) if -> IF arg operand arg THEN . BEGIN function else END
+
+    BEGIN           shift and go to state 85
+
+
+state 83
+
+    (44) while -> WHILE arg operand arg DO . BEGIN function END
+
+    BEGIN           shift and go to state 86
+
+
+state 84
+
+    (40) for -> FOR IDENTIFIER ASSIGN NUMBER TO NUMBER . DO BEGIN function END
+
+    DO              shift and go to state 87
+
+
+state 85
+
+    (41) if -> IF arg operand arg THEN BEGIN . function else END
+    (50) function -> . assign SEMICOLON
+    (51) function -> . func SEMICOLON
+    (52) function -> . expression SEMICOLON
+    (53) function -> . WRITE args SEMICOLON
+    (54) function -> . assign SEMICOLON function
+    (55) function -> . func SEMICOLON function
+    (56) function -> . expression SEMICOLON function
+    (57) function -> . WRITE args SEMICOLON function
+    (58) function -> . BREAK SEMICOLON
+    (59) function -> . CONTINUE SEMICOLON
+    (20) assign -> . IDENTIFIER ASSIGN expr
+    (32) func -> . IDENTIFIER LPAREN args RPAREN
+    (21) expression -> . for
+    (22) expression -> . if
+    (23) expression -> . while
+    (40) for -> . FOR IDENTIFIER ASSIGN NUMBER TO NUMBER DO BEGIN function END
+    (41) if -> . IF arg operand arg THEN BEGIN function else END
+    (44) while -> . WHILE arg operand arg DO BEGIN function END
+
+    WRITE           shift and go to state 92
+    BREAK           shift and go to state 93
+    CONTINUE        shift and go to state 94
+    IDENTIFIER      shift and go to state 19
+    FOR             shift and go to state 23
+    IF              shift and go to state 24
+    WHILE           shift and go to state 25
+
+    function                       shift and go to state 88
+    assign                         shift and go to state 89
+    func                           shift and go to state 90
+    expression                     shift and go to state 91
+    for                            shift and go to state 20
+    if                             shift and go to state 21
+    while                          shift and go to state 22
+
+state 86
+
+    (44) while -> WHILE arg operand arg DO BEGIN . function END
+    (50) function -> . assign SEMICOLON
+    (51) function -> . func SEMICOLON
+    (52) function -> . expression SEMICOLON
+    (53) function -> . WRITE args SEMICOLON
+    (54) function -> . assign SEMICOLON function
+    (55) function -> . func SEMICOLON function
+    (56) function -> . expression SEMICOLON function
+    (57) function -> . WRITE args SEMICOLON function
+    (58) function -> . BREAK SEMICOLON
+    (59) function -> . CONTINUE SEMICOLON
+    (20) assign -> . IDENTIFIER ASSIGN expr
+    (32) func -> . IDENTIFIER LPAREN args RPAREN
+    (21) expression -> . for
+    (22) expression -> . if
+    (23) expression -> . while
+    (40) for -> . FOR IDENTIFIER ASSIGN NUMBER TO NUMBER DO BEGIN function END
+    (41) if -> . IF arg operand arg THEN BEGIN function else END
+    (44) while -> . WHILE arg operand arg DO BEGIN function END
+
+    WRITE           shift and go to state 92
+    BREAK           shift and go to state 93
+    CONTINUE        shift and go to state 94
+    IDENTIFIER      shift and go to state 19
+    FOR             shift and go to state 23
+    IF              shift and go to state 24
+    WHILE           shift and go to state 25
+
+    function                       shift and go to state 95
+    assign                         shift and go to state 89
+    func                           shift and go to state 90
+    expression                     shift and go to state 91
+    for                            shift and go to state 20
+    if                             shift and go to state 21
+    while                          shift and go to state 22
+
+state 87
+
+    (40) for -> FOR IDENTIFIER ASSIGN NUMBER TO NUMBER DO . BEGIN function END
+
+    BEGIN           shift and go to state 96
+
+
+state 88
+
+    (41) if -> IF arg operand arg THEN BEGIN function . else END
+    (42) else -> .
+    (43) else -> . ELSE function
+
+    END             reduce using rule 42 (else -> .)
+    ELSE            shift and go to state 98
+
+    else                           shift and go to state 97
+
+state 89
+
+    (50) function -> assign . SEMICOLON
+    (54) function -> assign . SEMICOLON function
+
+    SEMICOLON       shift and go to state 99
+
+
+state 90
+
+    (51) function -> func . SEMICOLON
+    (55) function -> func . SEMICOLON function
+
+    SEMICOLON       shift and go to state 100
+
+
+state 91
+
+    (52) function -> expression . SEMICOLON
+    (56) function -> expression . SEMICOLON function
+
+    SEMICOLON       shift and go to state 101
+
+
+state 92
+
+    (53) function -> WRITE . args SEMICOLON
+    (57) function -> WRITE . args SEMICOLON function
+    (33) args -> .
+    (34) args -> . expr
+    (35) args -> . args COMMA expr
+    (24) expr -> . fact
+    (25) expr -> . expr PLUS fact
+    (26) expr -> . expr MINUS fact
+    (27) fact -> . term
+    (28) fact -> . fact MULTIPLY term
+    (29) fact -> . fact DIVIDE term
+    (30) term -> . arg
+    (31) term -> . LPAREN expr RPAREN
+    (36) arg -> . NUMBER
+    (37) arg -> . IDENTIFIER
+    (38) arg -> . func
+    (39) arg -> . NOT
+    (32) func -> . IDENTIFIER LPAREN args RPAREN
+
+    SEMICOLON       reduce using rule 33 (args -> .)
+    COMMA           reduce using rule 33 (args -> .)
+    LPAREN          shift and go to state 37
+    NUMBER          shift and go to state 38
+    IDENTIFIER      shift and go to state 39
+    NOT             shift and go to state 41
+
+    args                           shift and go to state 102
+    expr                           shift and go to state 33
+    fact                           shift and go to state 34
+    term                           shift and go to state 35
+    arg                            shift and go to state 36
+    func                           shift and go to state 40
+
+state 93
+
+    (58) function -> BREAK . SEMICOLON
+
+    SEMICOLON       shift and go to state 103
+
+
+state 94
+
+    (59) function -> CONTINUE . SEMICOLON
+
+    SEMICOLON       shift and go to state 104
+
+
+state 95
+
+    (44) while -> WHILE arg operand arg DO BEGIN function . END
+
+    END             shift and go to state 105
+
+
+state 96
+
+    (40) for -> FOR IDENTIFIER ASSIGN NUMBER TO NUMBER DO BEGIN . function END
+    (50) function -> . assign SEMICOLON
+    (51) function -> . func SEMICOLON
+    (52) function -> . expression SEMICOLON
+    (53) function -> . WRITE args SEMICOLON
+    (54) function -> . assign SEMICOLON function
+    (55) function -> . func SEMICOLON function
+    (56) function -> . expression SEMICOLON function
+    (57) function -> . WRITE args SEMICOLON function
+    (58) function -> . BREAK SEMICOLON
+    (59) function -> . CONTINUE SEMICOLON
+    (20) assign -> . IDENTIFIER ASSIGN expr
+    (32) func -> . IDENTIFIER LPAREN args RPAREN
+    (21) expression -> . for
+    (22) expression -> . if
+    (23) expression -> . while
+    (40) for -> . FOR IDENTIFIER ASSIGN NUMBER TO NUMBER DO BEGIN function END
+    (41) if -> . IF arg operand arg THEN BEGIN function else END
+    (44) while -> . WHILE arg operand arg DO BEGIN function END
+
+    WRITE           shift and go to state 92
+    BREAK           shift and go to state 93
+    CONTINUE        shift and go to state 94
+    IDENTIFIER      shift and go to state 19
+    FOR             shift and go to state 23
+    IF              shift and go to state 24
+    WHILE           shift and go to state 25
+
+    function                       shift and go to state 106
+    assign                         shift and go to state 89
+    func                           shift and go to state 90
+    expression                     shift and go to state 91
+    for                            shift and go to state 20
+    if                             shift and go to state 21
+    while                          shift and go to state 22
+
+state 97
+
+    (41) if -> IF arg operand arg THEN BEGIN function else . END
+
+    END             shift and go to state 107
+
+
+state 98
+
+    (43) else -> ELSE . function
+    (50) function -> . assign SEMICOLON
+    (51) function -> . func SEMICOLON
+    (52) function -> . expression SEMICOLON
+    (53) function -> . WRITE args SEMICOLON
+    (54) function -> . assign SEMICOLON function
+    (55) function -> . func SEMICOLON function
+    (56) function -> . expression SEMICOLON function
+    (57) function -> . WRITE args SEMICOLON function
+    (58) function -> . BREAK SEMICOLON
+    (59) function -> . CONTINUE SEMICOLON
+    (20) assign -> . IDENTIFIER ASSIGN expr
+    (32) func -> . IDENTIFIER LPAREN args RPAREN
+    (21) expression -> . for
+    (22) expression -> . if
+    (23) expression -> . while
+    (40) for -> . FOR IDENTIFIER ASSIGN NUMBER TO NUMBER DO BEGIN function END
+    (41) if -> . IF arg operand arg THEN BEGIN function else END
+    (44) while -> . WHILE arg operand arg DO BEGIN function END
+
+    WRITE           shift and go to state 92
+    BREAK           shift and go to state 93
+    CONTINUE        shift and go to state 94
+    IDENTIFIER      shift and go to state 19
+    FOR             shift and go to state 23
+    IF              shift and go to state 24
+    WHILE           shift and go to state 25
+
+    function                       shift and go to state 108
+    assign                         shift and go to state 89
+    func                           shift and go to state 90
+    expression                     shift and go to state 91
+    for                            shift and go to state 20
+    if                             shift and go to state 21
+    while                          shift and go to state 22
+
+state 99
+
+    (50) function -> assign SEMICOLON .
+    (54) function -> assign SEMICOLON . function
+    (50) function -> . assign SEMICOLON
+    (51) function -> . func SEMICOLON
+    (52) function -> . expression SEMICOLON
+    (53) function -> . WRITE args SEMICOLON
+    (54) function -> . assign SEMICOLON function
+    (55) function -> . func SEMICOLON function
+    (56) function -> . expression SEMICOLON function
+    (57) function -> . WRITE args SEMICOLON function
+    (58) function -> . BREAK SEMICOLON
+    (59) function -> . CONTINUE SEMICOLON
+    (20) assign -> . IDENTIFIER ASSIGN expr
+    (32) func -> . IDENTIFIER LPAREN args RPAREN
+    (21) expression -> . for
+    (22) expression -> . if
+    (23) expression -> . while
+    (40) for -> . FOR IDENTIFIER ASSIGN NUMBER TO NUMBER DO BEGIN function END
+    (41) if -> . IF arg operand arg THEN BEGIN function else END
+    (44) while -> . WHILE arg operand arg DO BEGIN function END
+
+    ELSE            reduce using rule 50 (function -> assign SEMICOLON .)
+    END             reduce using rule 50 (function -> assign SEMICOLON .)
+    WRITE           shift and go to state 92
+    BREAK           shift and go to state 93
+    CONTINUE        shift and go to state 94
+    IDENTIFIER      shift and go to state 19
+    FOR             shift and go to state 23
+    IF              shift and go to state 24
+    WHILE           shift and go to state 25
+
+    assign                         shift and go to state 89
+    function                       shift and go to state 109
+    func                           shift and go to state 90
+    expression                     shift and go to state 91
+    for                            shift and go to state 20
+    if                             shift and go to state 21
+    while                          shift and go to state 22
+
+state 100
+
+    (51) function -> func SEMICOLON .
+    (55) function -> func SEMICOLON . function
+    (50) function -> . assign SEMICOLON
+    (51) function -> . func SEMICOLON
+    (52) function -> . expression SEMICOLON
+    (53) function -> . WRITE args SEMICOLON
+    (54) function -> . assign SEMICOLON function
+    (55) function -> . func SEMICOLON function
+    (56) function -> . expression SEMICOLON function
+    (57) function -> . WRITE args SEMICOLON function
+    (58) function -> . BREAK SEMICOLON
+    (59) function -> . CONTINUE SEMICOLON
+    (20) assign -> . IDENTIFIER ASSIGN expr
+    (32) func -> . IDENTIFIER LPAREN args RPAREN
+    (21) expression -> . for
+    (22) expression -> . if
+    (23) expression -> . while
+    (40) for -> . FOR IDENTIFIER ASSIGN NUMBER TO NUMBER DO BEGIN function END
+    (41) if -> . IF arg operand arg THEN BEGIN function else END
+    (44) while -> . WHILE arg operand arg DO BEGIN function END
+
+    ELSE            reduce using rule 51 (function -> func SEMICOLON .)
+    END             reduce using rule 51 (function -> func SEMICOLON .)
+    WRITE           shift and go to state 92
+    BREAK           shift and go to state 93
+    CONTINUE        shift and go to state 94
+    IDENTIFIER      shift and go to state 19
+    FOR             shift and go to state 23
+    IF              shift and go to state 24
+    WHILE           shift and go to state 25
+
+    func                           shift and go to state 90
+    function                       shift and go to state 110
+    assign                         shift and go to state 89
+    expression                     shift and go to state 91
+    for                            shift and go to state 20
+    if                             shift and go to state 21
+    while                          shift and go to state 22
+
+state 101
+
+    (52) function -> expression SEMICOLON .
+    (56) function -> expression SEMICOLON . function
+    (50) function -> . assign SEMICOLON
+    (51) function -> . func SEMICOLON
+    (52) function -> . expression SEMICOLON
+    (53) function -> . WRITE args SEMICOLON
+    (54) function -> . assign SEMICOLON function
+    (55) function -> . func SEMICOLON function
+    (56) function -> . expression SEMICOLON function
+    (57) function -> . WRITE args SEMICOLON function
+    (58) function -> . BREAK SEMICOLON
+    (59) function -> . CONTINUE SEMICOLON
+    (20) assign -> . IDENTIFIER ASSIGN expr
+    (32) func -> . IDENTIFIER LPAREN args RPAREN
+    (21) expression -> . for
+    (22) expression -> . if
+    (23) expression -> . while
+    (40) for -> . FOR IDENTIFIER ASSIGN NUMBER TO NUMBER DO BEGIN function END
+    (41) if -> . IF arg operand arg THEN BEGIN function else END
+    (44) while -> . WHILE arg operand arg DO BEGIN function END
+
+    ELSE            reduce using rule 52 (function -> expression SEMICOLON .)
+    END             reduce using rule 52 (function -> expression SEMICOLON .)
+    WRITE           shift and go to state 92
+    BREAK           shift and go to state 93
+    CONTINUE        shift and go to state 94
+    IDENTIFIER      shift and go to state 19
+    FOR             shift and go to state 23
+    IF              shift and go to state 24
+    WHILE           shift and go to state 25
+
+    expression                     shift and go to state 91
+    function                       shift and go to state 111
+    assign                         shift and go to state 89
+    func                           shift and go to state 90
+    for                            shift and go to state 20
+    if                             shift and go to state 21
+    while                          shift and go to state 22
+
+state 102
+
+    (53) function -> WRITE args . SEMICOLON
+    (57) function -> WRITE args . SEMICOLON function
+    (35) args -> args . COMMA expr
+
+    SEMICOLON       shift and go to state 112
+    COMMA           shift and go to state 53
+
+
+state 103
+
+    (58) function -> BREAK SEMICOLON .
+
+    ELSE            reduce using rule 58 (function -> BREAK SEMICOLON .)
+    END             reduce using rule 58 (function -> BREAK SEMICOLON .)
+
+
+state 104
+
+    (59) function -> CONTINUE SEMICOLON .
+
+    ELSE            reduce using rule 59 (function -> CONTINUE SEMICOLON .)
+    END             reduce using rule 59 (function -> CONTINUE SEMICOLON .)
+
+
+state 105
+
+    (44) while -> WHILE arg operand arg DO BEGIN function END .
+
+    SEMICOLON       reduce using rule 44 (while -> WHILE arg operand arg DO BEGIN function END .)
+
+
+state 106
+
+    (40) for -> FOR IDENTIFIER ASSIGN NUMBER TO NUMBER DO BEGIN function . END
+
+    END             shift and go to state 113
+
+
+state 107
+
+    (41) if -> IF arg operand arg THEN BEGIN function else END .
+
+    SEMICOLON       reduce using rule 41 (if -> IF arg operand arg THEN BEGIN function else END .)
+
+
+state 108
+
+    (43) else -> ELSE function .
+
+    END             reduce using rule 43 (else -> ELSE function .)
+
+
+state 109
+
+    (54) function -> assign SEMICOLON function .
+
+    ELSE            reduce using rule 54 (function -> assign SEMICOLON function .)
+    END             reduce using rule 54 (function -> assign SEMICOLON function .)
+
+
+state 110
+
+    (55) function -> func SEMICOLON function .
+
+    ELSE            reduce using rule 55 (function -> func SEMICOLON function .)
+    END             reduce using rule 55 (function -> func SEMICOLON function .)
+
+
+state 111
+
+    (56) function -> expression SEMICOLON function .
+
+    ELSE            reduce using rule 56 (function -> expression SEMICOLON function .)
+    END             reduce using rule 56 (function -> expression SEMICOLON function .)
+
+
+state 112
+
+    (53) function -> WRITE args SEMICOLON .
+    (57) function -> WRITE args SEMICOLON . function
+    (50) function -> . assign SEMICOLON
+    (51) function -> . func SEMICOLON
+    (52) function -> . expression SEMICOLON
+    (53) function -> . WRITE args SEMICOLON
+    (54) function -> . assign SEMICOLON function
+    (55) function -> . func SEMICOLON function
+    (56) function -> . expression SEMICOLON function
+    (57) function -> . WRITE args SEMICOLON function
+    (58) function -> . BREAK SEMICOLON
+    (59) function -> . CONTINUE SEMICOLON
+    (20) assign -> . IDENTIFIER ASSIGN expr
+    (32) func -> . IDENTIFIER LPAREN args RPAREN
+    (21) expression -> . for
+    (22) expression -> . if
+    (23) expression -> . while
+    (40) for -> . FOR IDENTIFIER ASSIGN NUMBER TO NUMBER DO BEGIN function END
+    (41) if -> . IF arg operand arg THEN BEGIN function else END
+    (44) while -> . WHILE arg operand arg DO BEGIN function END
+
+    ELSE            reduce using rule 53 (function -> WRITE args SEMICOLON .)
+    END             reduce using rule 53 (function -> WRITE args SEMICOLON .)
+    WRITE           shift and go to state 92
+    BREAK           shift and go to state 93
+    CONTINUE        shift and go to state 94
+    IDENTIFIER      shift and go to state 19
+    FOR             shift and go to state 23
+    IF              shift and go to state 24
+    WHILE           shift and go to state 25
+
+    function                       shift and go to state 114
+    assign                         shift and go to state 89
+    func                           shift and go to state 90
+    expression                     shift and go to state 91
+    for                            shift and go to state 20
+    if                             shift and go to state 21
+    while                          shift and go to state 22
+
+state 113
+
+    (40) for -> FOR IDENTIFIER ASSIGN NUMBER TO NUMBER DO BEGIN function END .
+
+    SEMICOLON       reduce using rule 40 (for -> FOR IDENTIFIER ASSIGN NUMBER TO NUMBER DO BEGIN function END .)
+
+
+state 114
+
+    (57) function -> WRITE args SEMICOLON function .
+
+    ELSE            reduce using rule 57 (function -> WRITE args SEMICOLON function .)
+    END             reduce using rule 57 (function -> WRITE args SEMICOLON function .)
+
